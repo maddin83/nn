@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 public class NeuronalController {
 	
-	private NeuralNetwork myMlPerceptron = new NeuralNetwork();
+	private NeuralNetwork myMlPerceptron = new NeuralNetwork() ;
 	
 	@RequestMapping("/initiate")
     public int initiate() {
