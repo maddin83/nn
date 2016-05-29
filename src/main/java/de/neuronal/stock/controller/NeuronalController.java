@@ -94,7 +94,7 @@ public class NeuronalController {
 	}
 	
 	/**
-	 * asks Yahoo for the Dax values of last 5 years and prints it in a String
+	 * asks Yahoo for stock values of last 5 years and prints it in a String 
 	 * @return
 	 */
 	@RequestMapping("/callYahoo")
