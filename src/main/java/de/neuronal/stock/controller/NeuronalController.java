@@ -1,6 +1,16 @@
 package de.neuronal.stock.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.HistoricalQuote;
+import yahoofinance.histquotes.Interval;
+
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
+
 import org.neuroph.core.Layer;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.events.LearningEvent;
@@ -83,4 +93,26 @@ public class NeuronalController {
 		return myMlPerceptron.getOutput();
 	}
 	
+	/**
+	 * asks Yahoo for the Dax values of last 5 years and prints it in a String
+	 * @return
+	 */
+	@RequestMapping("/callYahoo")
+	public String callYahoo(){
+		String returnMe = null;
+		try {
+			List<HistoricalQuote> historicalQuotes = null;
+			Calendar timeFrom = Calendar.getInstance();
+			timeFrom.add(Calendar.YEAR, -5);
+			Stock stock = YahooFinance.get("^GDAXI", timeFrom, Interval.DAILY);
+			historicalQuotes = stock.getHistory();
+			for(HistoricalQuote quote : historicalQuotes){
+				returnMe += quote.toString();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			return returnMe;
+		}
 }
