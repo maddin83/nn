@@ -99,20 +99,22 @@ public class NeuronalController {
 	 */
 	@RequestMapping("/callYahoo")
 	public String callYahoo(){
-		String returnMe = null;
+		StringBuilder stringBuilder = new StringBuilder();
+		
 		try {
 			List<HistoricalQuote> historicalQuotes = null;
 			Calendar timeFrom = Calendar.getInstance();
 			timeFrom.add(Calendar.YEAR, -5);
 			Stock stock = YahooFinance.get("^GDAXI", timeFrom, Interval.DAILY);
 			historicalQuotes = stock.getHistory();
+			stringBuilder.append(historicalQuotes.toString());
 			for(HistoricalQuote quote : historicalQuotes){
-				returnMe += quote.toString();
+			    stringBuilder.append(quote.toString() + ";"+ System.lineSeparator() + "x");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			return returnMe;
+			return stringBuilder.toString();
 		}
 }
