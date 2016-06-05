@@ -10,8 +10,6 @@ public class NeuronalApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NeuronalApplication.class, args);
-		NNDBUtil.initH2DB();
-		System.out.println(NNDBUtil.getDaxValues());
 	}
 
 	
