@@ -19,16 +19,16 @@ import yahoofinance.histquotes.Interval;
  */
 public class NNStockWorker {
 
-	private String[] stockNames = { "^GDAXI", "^DJI", "^IXIC", "GLD", "BNO" };
+	private String[] stockNames = { "^GDAXI", "^IXIC", "GLD", "BNO" };
 
 	/**
 	 * fetches Stock values from providers in internet
 	 * 
 	 * @return
 	 */
-	public List<NNStockValue> getHistoricalStockValues() {
+	public List<NNStockValue> getHistoricalStockValues(int years) {
 		// Todo possible calls to other providers than Yahoo go here
-		return callYahoo();
+		return callYahoo(years);
 	}
 
 	/**
@@ -36,12 +36,12 @@ public class NNStockWorker {
 	 * 
 	 * @return
 	 */
-	private List<NNStockValue> callYahoo() {
+	private List<NNStockValue> callYahoo(int years) {
 		Map<String, Stock> stockMap = null;
 		List<NNStockValue> stockValues = new ArrayList<NNStockValue>();
 		try {
 			Calendar timeFrom = Calendar.getInstance();
-			timeFrom.add(Calendar.YEAR, -1);
+			timeFrom.add(Calendar.YEAR, -years);
 			stockMap = YahooFinance.get(stockNames, timeFrom, Interval.DAILY);
 
 			Set<Map.Entry<String, Stock>> entries = stockMap.entrySet();

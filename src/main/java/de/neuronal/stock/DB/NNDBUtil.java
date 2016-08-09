@@ -33,7 +33,7 @@ public class NNDBUtil {
 	}
 
 	private void normalizeAll() {
-		List<String> stockNames = repo.findDistinctNameBy();
+		List<String> stockNames = repo.findDistinctStockNamesy();
 		for (String stockName : stockNames) {
 			repo.normalizeStockValues(stockName);
 		}

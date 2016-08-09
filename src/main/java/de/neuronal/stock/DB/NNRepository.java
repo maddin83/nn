@@ -12,19 +12,20 @@ import de.neuronal.stock.entity.NNStockValue;
 public interface NNRepository extends CrudRepository<NNStockValue, Long> {
 
 	List<NNStockValue> findByName(String name);
-
-	List<String> findDistinctNameBy();
+	
+	@Query(value="select distinct name from NNStockValue")
+	List<String> findDistinctStockNamesy();
 	
 	@Transactional
 	@Modifying
-	@Query(name = "normalizeAll", nativeQuery=true, value = "UPDATE NNStockValue SET close_norm = (close - min(close))/(max(close)*1.1 - min(close)) WHERE name in (SELECT DISTINCT name FROM NNStockValue)")
-	void normalizeAll();
+	@Query(value="UPDATE NNStockValue SET close_norm = (close - (select min(close) from NNStockValue where name = ?1)) / ( (select max(close) from NNStockValue where name = ?1)*1.1 - (select min(close) from NNStockValue where name = ?1) ) "
+			+ ", high_norm = (high - (select min(high) from NNStockValue where name = ?1)) / ( (select max(high) from NNStockValue where name = ?1)*1.1 - (select min(high) from NNStockValue where name = ?1) )"
+			+ ", low_norm = (low - (select min(low) from NNStockValue where name = ?1)) / ( (select max(low) from NNStockValue where name = ?1)*1.1 - (select min(low) from NNStockValue where name = ?1) )"
+			+ ", open_norm = (open - (select min(open) from NNStockValue where name = ?1)) / ( (select max(open) from NNStockValue where name = ?1)*1.1 - (select min(open) from NNStockValue where name = ?1) )"
+			+ ", volume_norm = (volume - (select min(volume) from NNStockValue where name = ?1)) / ( (select max(volume) from NNStockValue where name = ?1)*1.1 - (select min(volume) from NNStockValue where name = ?1) )"
+			+ ", time_norm = (timeInMillis - (select min(timeInMillis) from NNStockValue where name = ?1)) / ( (select max(timeInMillis) from NNStockValue where name = ?1)*1.002 - (select min(timeInMillis) from NNStockValue where name = ?1) )"
+			+ "WHERE name = ?1")
+	void normalizeStockValues(String stockName);
 	
-	@Transactional
-	@Modifying
-	@Query(name = "normalizeStockValues", nativeQuery=true,  value = "UPDATE NNStockValue SET close_norm = (close - min(select close from nnstockvalue where name = ?1))/(max(select close from nnstockvalue where name = ?!)*1.1 - min(select close from nnstockvalue where name = ?!)) WHERE name = ?1)")
-	void normalizeStockValues(String string);
 	
-	long count();
 }
-	

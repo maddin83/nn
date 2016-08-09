@@ -24,8 +24,8 @@ public class NNStockValue {
 
 	public NNStockValue(String name, BigDecimal open, BigDecimal close, BigDecimal high,
 			BigDecimal low, long volume, BigDecimal open_norm, BigDecimal close_norm,
-			BigDecimal high_norm, BigDecimal low_norm, BigDecimal volume_normm, long volume_norm,
-			long timeInMillis) {
+			BigDecimal high_norm, BigDecimal low_norm, BigDecimal volume_norm,
+			long timeInMillis, BigDecimal time_norm) {
 		super();
 		this.name = name;
 		this.open = open;
@@ -39,6 +39,8 @@ public class NNStockValue {
 		this.low_norm = low_norm;
 		this.volume_norm = volume_norm;
 		this.timeInMillis = timeInMillis;
+		this.time_norm = time_norm;
+		
 	}
 
 	protected NNStockValue() {
@@ -57,8 +59,9 @@ public class NNStockValue {
 	private BigDecimal close_norm;
 	private BigDecimal high_norm;
 	private BigDecimal low_norm;
-	private long volume_norm;
+	private BigDecimal volume_norm;
 	private long timeInMillis;
+	private BigDecimal time_norm;
 
 	public String getName() {
 		return name;
@@ -140,11 +143,11 @@ public class NNStockValue {
 		this.low_norm = low_norm;
 	}
 
-	public long getVolume_norm() {
+	public BigDecimal getVolume_norm() {
 		return volume_norm;
 	}
 
-	public void setVolume_norm(long volume_norm) {
+	public void setVolume_norm(BigDecimal volume_norm) {
 		this.volume_norm = volume_norm;
 	}
 
@@ -156,13 +159,21 @@ public class NNStockValue {
 		this.timeInMillis = timeInMillis;
 	}
 
+	public BigDecimal getTime_norm() {
+		return time_norm;
+	}
+
+	public void setTime_norm(BigDecimal time_norm) {
+		this.time_norm = time_norm;
+	}
+
 	@Override
 	public String toString() {
 		return "NNStockValue [id=" + id + ", name=" + name + ", open=" + open + ", close=" + close
 				+ ", high=" + high + ", low=" + low + ", volume=" + volume + ", open_norm="
 				+ open_norm + ", close_norm=" + close_norm + ", high_norm=" + high_norm
 				+ ", low_norm=" + low_norm + ", volume_norm=" + volume_norm + ", timeInMillis="
-				+ timeInMillis + "]";
+				+ timeInMillis + ", time_norm=" + time_norm + "]";
 	}
 
 }

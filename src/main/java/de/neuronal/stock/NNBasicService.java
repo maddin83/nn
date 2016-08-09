@@ -25,20 +25,24 @@ public class NNBasicService {
     EntityManager em;
     
     public void initiate() {
-
 		// set up the neuronal network
 		netBuilder.init();
-	
-		// get the stock values
-		List<NNStockValue> stockValues = stockWorker.getHistoricalStockValues();
-	
-		// insert the stock values in DB and normalize them
-		dbUtil.storeStockValues(stockValues);
-	
-		// train neuronal net with stock data
-
     }
-
+    
+    public void fetchAndStoreStockValues(int years){
+    	
+    	//TODO find out if there are already values fetched and which is the last date
+    	
+    	// 	get the stock values
+ 		List<NNStockValue> stockValues = stockWorker.getHistoricalStockValues(years);
+ 	
+ 		// insert the stock values in DB and normalize them
+ 		dbUtil.storeStockValues(stockValues);
+ 	
+ 		// train neuronal net with stock data
+ 		//TODO
+    }
+    
 	public String getStockCount() {
 		return dbUtil.getStockCount();
 	}
