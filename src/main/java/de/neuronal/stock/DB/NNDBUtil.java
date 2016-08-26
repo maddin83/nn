@@ -2,10 +2,7 @@ package de.neuronal.stock.DB;
 
 import java.util.List;
 
-import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
@@ -15,7 +12,7 @@ import de.neuronal.stock.entity.NNStockValue;
 @Service
 public class NNDBUtil {
 
-	private NNRepository repo;
+	private final NNRepository repo;
 
 	@Autowired
 	public NNDBUtil(NNRepository repo) {
@@ -25,7 +22,7 @@ public class NNDBUtil {
 	/**
 	 * insert Stock values into DB and normalize them
 	 * 
-	 * @param historicalStockValues
+	 * @param stockValues
 	 */
 	public void storeStockValues(List<NNStockValue> stockValues) {
 		repo.save(stockValues);
@@ -34,9 +31,7 @@ public class NNDBUtil {
 
 	private void normalizeAll() {
 		List<String> stockNames = repo.findDistinctStockNamesy();
-		for (String stockName : stockNames) {
-			repo.normalizeStockValues(stockName);
-		}
+		stockNames.forEach(repo::normalizeStockValues);
 	}
 
 	public String getStockCount() {

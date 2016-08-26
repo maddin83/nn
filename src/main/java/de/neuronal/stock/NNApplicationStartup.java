@@ -23,6 +23,5 @@ public class NNApplicationStartup implements ApplicationListener<ApplicationRead
 	public void onApplicationEvent(final ApplicationReadyEvent event) {
 		basicService.initiate();
 		System.out.println("NNApplicationStartup - called basicService.initiate()");
-		return;
 	}
 }

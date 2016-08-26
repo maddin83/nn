@@ -2,8 +2,6 @@ package de.neuronal.stock.nets;
 
 import org.neuroph.core.Layer;
 import org.neuroph.core.NeuralNetwork;
-import org.neuroph.core.events.LearningEvent;
-import org.neuroph.core.events.LearningEventListener;
 import org.neuroph.nnet.comp.neuron.BiasNeuron;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 import org.neuroph.util.ConnectionFactory;
@@ -13,12 +11,9 @@ import org.neuroph.util.NeuralNetworkType;
 import org.neuroph.util.NeuronProperties;
 import org.neuroph.util.TransferFunctionType;
 
-/**
- * Created by martschmidt on 03.06.16.
- */
 public class NNNetUtil {
 
-	private NeuralNetwork<MomentumBackpropagation> myMlPerceptron = new NeuralNetwork<MomentumBackpropagation>();
+	private final NeuralNetwork<MomentumBackpropagation> myMlPerceptron = new NeuralNetwork<MomentumBackpropagation>();
 
     public int init() {
 	NeuronProperties neuronProperties = new NeuronProperties();
@@ -64,12 +59,7 @@ public class NNNetUtil {
 	learningRule.setLearningRate(learningRate);
 	learningRule.setMaxIterations(maxIterations);
 
-	learningRule.addListener(new LearningEventListener() {
-	    public void handleLearningEvent(LearningEvent learningEvent) {
-		MomentumBackpropagation rule = (MomentumBackpropagation) learningEvent.getSource();
-
-	    }
-	});
+	learningRule.addListener(learningEvent-> {MomentumBackpropagation rule = (MomentumBackpropagation) learningEvent.getSource();});
 
 	return myMlPerceptron.getLayersCount();
     }

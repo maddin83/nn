@@ -2,8 +2,6 @@ package de.neuronal.stock;
 
 import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
-
 import org.h2.server.web.WebServlet;
 import org.h2.tools.Server;
 import org.springframework.boot.SpringApplication;
@@ -28,7 +26,7 @@ public class NNApplication {
 	}
 	
 	@Bean(initMethod="start", destroyMethod="stop")
-	public Server initH2TCPServer(ServletContext servletContext) {
+	public Server initH2TCPServer() {
 	    Server server = null;
 		try {
 	        server = Server.createTcpServer( "-tcp", "-tcpAllowOthers", "-tcpPort", "8082" );

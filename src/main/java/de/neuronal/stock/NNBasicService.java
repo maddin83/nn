@@ -2,8 +2,6 @@ package de.neuronal.stock;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +13,15 @@ import de.neuronal.stock.stocks.NNStockWorker;
 @Service
 public class NNBasicService {
 	
-    private NNNetUtil netBuilder = new NNNetUtil();
-    private NNStockWorker stockWorker = new NNStockWorker();
-    
-    @Autowired
+    private final NNNetUtil netBuilder = new NNNetUtil();
+    private final NNStockWorker stockWorker = new NNStockWorker();
     private NNDBUtil dbUtil;
-    
+
     @Autowired
-    EntityManager em;
-    
+    public void setDbUtil(NNDBUtil dbUtil) {
+        this.dbUtil = dbUtil;
+    }
+
     public void initiate() {
 		// set up the neuronal network
 		netBuilder.init();
@@ -48,7 +46,8 @@ public class NNBasicService {
 	}
 
 	public void getOneEntry() {
-		 dbUtil.getOneEntry(); 
+		 dbUtil.getOneEntry();
 	}
+
 
 }
